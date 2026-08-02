@@ -285,3 +285,9 @@ async function loadAll() {
 
 renderAuthState();
 if (state.token) loadAll();
+
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("/sw.js").catch(() => {});
+  });
+}
