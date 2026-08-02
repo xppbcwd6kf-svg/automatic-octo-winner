@@ -27,6 +27,19 @@ Abre http://localhost:3000 en el navegador.
 
 Los datos se guardan en un archivo SQLite en `data/budget.db` (se crea automáticamente).
 
+## Desplegar en internet (para usarla desde el iPhone)
+
+Para usar la app desde tu celular necesitas que quede accesible en una URL, no solo en `localhost`. La forma mas facil es con **Render**:
+
+1. Crea una cuenta gratis en [render.com](https://render.com) y conectala con tu cuenta de GitHub.
+2. En el dashboard elige **New > Blueprint** y selecciona este repositorio. Render detectara el archivo `render.yaml` incluido y configurara el servicio automaticamente (genera `JWT_SECRET` por ti).
+3. Espera a que termine el build (unos minutos) y Render te dara una URL publica, por ejemplo `https://presupuesto-casa.onrender.com`.
+4. Abre esa URL en Safari desde tu iPhone, crea tu cuenta y luego toca **Compartir > Anadir a pantalla de inicio** para instalarla como app.
+
+**Importante sobre el plan gratuito de Render:** el disco no es persistente, asi que los datos (tus facturas y quincenas) se pueden borrar cuando el servicio se "duerme" por inactividad o cuando hay un nuevo deploy. Para guardar los datos de forma permanente, cambia el servicio a un plan pago (~$7 USD/mes) y activa el disco persistente que ya viene comentado en `render.yaml`.
+
+**Alternativa con almacenamiento persistente mas barato:** [Railway](https://railway.app) permite anadir un volumen persistente aun en planes economicos. Solo necesitas crear un proyecto nuevo desde el repo, definir la variable de entorno `JWT_SECRET`, y montar un volumen en la carpeta `data/`.
+
 ## API
 
 Todas las rutas bajo `/api/bills`, `/api/paydays` y `/api/dashboard` requieren el header `Authorization: Bearer <token>` obtenido en `/api/auth/login` o `/api/auth/register`.

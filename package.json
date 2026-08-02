@@ -4,6 +4,9 @@
   "description": "App de presupuesto del hogar: reparte automaticamente tus facturas mensuales entre tus quincenas de pago.",
   "main": "server/index.js",
   "type": "commonjs",
+  "engines": {
+    "node": ">=18"
+  },
   "scripts": {
     "start": "node server/index.js",
     "dev": "node server/index.js"
