@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: presupuesto-casa
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /health
+    envVars:
+      - key: JWT_SECRET
+        generateValue: true
+    # El plan "free" tiene disco no persistente: los datos se borran en cada
+    # redeploy o cuando el servicio se duerme por inactividad. Para guardar
+    # los datos de forma permanente, cambia a un plan pago (ej. "starter") y
+    # descomenta este bloque para montar un disco persistente:
+    # disk:
+    #   name: presupuesto-casa-data
+    #   mountPath: /opt/render/project/src/data
+    #   sizeGB: 1

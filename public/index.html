@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Presupuesto de la Casa</title>
+  <meta name="theme-color" content="#2f6f4f" />
+  <meta name="description" content="Reparte automaticamente tus facturas mensuales entre tus quincenas de pago." />
+
+  <!-- Instalable en iPhone (Compartir > Anadir a pantalla de inicio) -->
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Presupuesto" />
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
+  <link rel="icon" href="icons/icon-192.png" />
+  <link rel="manifest" href="manifest.json" />
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="app">
+    <header class="topbar">
+      <h1>🏠 Presupuesto de la Casa</h1>
+      <div id="userBox" class="user-box hidden">
+        <span id="userEmail"></span>
+        <button id="logoutBtn" class="btn ghost">Salir</button>
+      </div>
+    </header>
+
+    <!-- AUTH -->
+    <section id="authSection" class="card auth-card">
+      <div class="tabs">
+        <button class="tab-btn active" data-tab="login">Iniciar sesion</button>
+        <button class="tab-btn" data-tab="register">Crear cuenta</button>
+      </div>
+
+      <form id="loginForm" class="form">
+        <label>Correo<input type="email" name="email" required /></label>
+        <label>Contrasena<input type="password" name="password" required /></label>
+        <button class="btn primary" type="submit">Entrar</button>
+        <p class="error" id="loginError"></p>
+      </form>
+
+      <form id="registerForm" class="form hidden">
+        <label>Correo<input type="email" name="email" required /></label>
+        <label>Contrasena (min. 6 caracteres)<input type="password" name="password" required minlength="6" /></label>
+        <button class="btn primary" type="submit">Crear cuenta</button>
+        <p class="error" id="registerError"></p>
+      </form>
+    </section>
+
+    <!-- MAIN APP -->
+    <main id="mainSection" class="hidden">
+      <section class="card">
+        <div class="section-header">
+          <h2>Resumen del mes</h2>
+          <input type="month" id="monthPicker" />
+        </div>
+        <div class="totals-grid" id="totalsGrid"></div>
+        <div id="billsStatus" class="bills-status"></div>
+      </section>
+
+      <section class="card">
+        <h2>Mis facturas mensuales</h2>
+        <p class="hint">Registra tus facturas mensuales. En cada quincena la app apartara automaticamente la mitad del monto de cada una.</p>
+        <form id="billForm" class="form inline-form">
+          <label>Nombre<input type="text" name="name" placeholder="Ej. Renta" required /></label>
+          <label>Monto mensual<input type="number" step="0.01" min="0.01" name="monthlyAmount" required /></label>
+          <label>Dia de vencimiento<input type="number" min="1" max="31" name="dueDay" placeholder="Opcional" /></label>
+          <label>Categoria<input type="text" name="category" placeholder="Opcional" /></label>
+          <button class="btn primary" type="submit">Agregar factura</button>
+        </form>
+        <p class="error" id="billError"></p>
+        <table class="table" id="billsTable">
+          <thead>
+            <tr><th>Nombre</th><th>Categoria</th><th>Monto mensual</th><th>Por quincena</th><th>Vence</th><th></th></tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </section>
+
+      <section class="card">
+        <h2>Registrar quincena (pago recibido)</h2>
+        <p class="hint">Cuando recibas tu dinero, registra la fecha y el monto. La app repartira automaticamente la mitad de cada factura y te dira cuanto te queda disponible.</p>
+        <form id="paydayForm" class="form inline-form">
+          <label>Fecha<input type="date" name="date" required /></label>
+          <label>Monto recibido<input type="number" step="0.01" min="0" name="incomeAmount" required /></label>
+          <label>Nota<input type="text" name="note" placeholder="Opcional" /></label>
+          <button class="btn primary" type="submit">Repartir quincena</button>
+        </form>
+        <p class="error" id="paydayError"></p>
+        <div id="paydayResult" class="payday-result hidden"></div>
+      </section>
+
+      <section class="card">
+        <h2>Historial de quincenas del mes</h2>
+        <div id="paydaysList" class="paydays-list"></div>
+      </section>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
